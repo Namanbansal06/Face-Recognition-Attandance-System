@@ -4,6 +4,17 @@ import pickle
 import os
 from PIL import Image
 import numpy as np
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+from firebase_admin import storage
+
+cred = credentials.Certificate("serviceAccountKey.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL': "https://faceattendancerealtime-4cb46-default-rtdb.firebaseio.com/",
+    'storageBucket': "faceattendancerealtime-4cb46.appspot.com"
+})
+
 
 # Importing the student images
 folderPath = 'Images'
@@ -18,6 +29,12 @@ for path in PathList:
     img_np = np.array(img_8bit)
     imgList.append(img_np)
     studentIds.append(os.path.splitext(path)[0])
+
+    fileName = f'{folderPath}/{path}'  # adding images to database
+    bucket = storage.bucket()
+    blob = bucket.blob(fileName)
+    blob.upload_from_filename(fileName)
+
     # print(path)
     # print(os.path.splitext(path)[0])
 print(len(imgList))

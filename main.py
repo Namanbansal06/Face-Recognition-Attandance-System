@@ -51,8 +51,8 @@ while True:
         # print("Match Index", matchIndex)
 
         if matches[matchIndex]:
-            # print("Known Face Detected")
-            # print(studentIds[matchIndex])
+            print("Known Face Detected")
+            print(studentIds[matchIndex])
             y1, x2, y2, x1 = faceLoc
             y1, x2, y2, x1 = y1*4 ,x2*4 ,y2*4 ,x1*4
             #multiply 4 becoz we reduce the size by 4. SEE line no 34
